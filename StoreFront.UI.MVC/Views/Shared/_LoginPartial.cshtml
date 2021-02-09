@@ -1,19 +1,61 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated) {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+        if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+            <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+        }
+        else
+        {
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <div class="sinlge-bar shopping">
+                    <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+                    <!-- Shopping Item -->
+                    <div class="shopping-item">
+                        <div class="dropdown-cart-header">
+                            <span>2 Items</span>
+                            <a href="#">View Cart</a>
+                        </div>
+                        <ul class="shopping-list">
+                            <li>
+                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
+                                <h4><a href="#">Woman Ring</a></h4>
+                                <p class="quantity">1x - <span class="amount">$99.00</span></p>
+                            </li>
+                            <li>
+                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
+                                <h4><a href="#">Woman Necklace</a></h4>
+                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
+                            </li>
+                        </ul>
+                        <div class="bottom">
+                            <div class="total">
+                                <span>Total</span>
+                                <span class="total-amount">$134.00</span>
+                            </div>
+                            <a href="checkout.html" class="btn animate">Checkout</a>
+                        </div>
+                    </div>
+                    <!--/ End Shopping Item -->
+                </div>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+        }
     }
 }
-else {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+else
+{
+    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
 }
