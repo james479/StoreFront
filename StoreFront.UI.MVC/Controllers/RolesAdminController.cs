@@ -137,7 +137,7 @@ namespace StoreFront.UI.MVC.Controllers
         [HttpPost]
 
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,Id")] RoleViewModel roleModel)
+        public async Task<ActionResult> Edit([Bind(Include = "MachineTypeName,Id")] RoleViewModel roleModel)
         {
             if (ModelState.IsValid)
             {

@@ -1,0 +1,63 @@
+/* your styles go here */
+
+.form-container {
+    margin-top: 10em;
+}
+
+.user-name {
+    color: #000;
+}
+
+.register-login a{
+    color: #000;
+}
+
+    .register-login a:hover {
+        color: #dcb14a;
+        transition: all 0.3s
+    }
+
+.admin-form {
+    margin: auto;
+    width: 30%;
+}
+
+dt {
+    margin-bottom: .5em;
+}
+
+dd {
+    margin-bottom: 2em;
+}
+
+.small-dropdown {
+    width: 20%;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/*******Home Page*********/
+
+.general-product-image {
+    width: 14em;
+    height: 14em;
+}
+
+/****Create Form****/
+.create-form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 1.5em;
+    background-color: rgb(227, 225, 229);
+}
+
+.create-form label {
+    margin-right: .7em;
+    font-weight: bold;
+}
+
+.create-form-name {
+    width: 50%;
+}

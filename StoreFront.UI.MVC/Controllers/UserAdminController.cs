@@ -78,7 +78,7 @@ namespace StoreFront.UI.MVC.Controllers
         public async Task<ActionResult> Create()
         {
             //Get the list of Roles
-            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
+            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "MachineTypeName", "MachineTypeName");
             return View();
         }
 
@@ -102,7 +102,7 @@ namespace StoreFront.UI.MVC.Controllers
                         if (!result.Succeeded)
                         {
                             ModelState.AddModelError("", result.Errors.First());
-                            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
+                            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "MachineTypeName", "MachineTypeName");
                             return View();
                         }
                     }
@@ -110,13 +110,13 @@ namespace StoreFront.UI.MVC.Controllers
                 else
                 {
                     ModelState.AddModelError("", adminresult.Errors.First());
-                    ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+                    ViewBag.RoleId = new SelectList(RoleManager.Roles, "MachineTypeName", "MachineTypeName");
                     return View();
 
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+            ViewBag.RoleId = new SelectList(RoleManager.Roles, "MachineTypeName", "MachineTypeName");
             return View();
         }
 

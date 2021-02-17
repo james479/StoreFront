@@ -1,0 +1,54 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.Manufacture>
+
+@{
+    ViewBag.Title = "Manufactures";
+}
+
+
+
+<h2 class="text-center my-5">@ViewBag.Title</h2>
+
+<table class="table w-50 m-auto">
+    <tr class="text-center">
+        <th>
+            @Html.DisplayNameFor(model => model.ManufactureName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.StateName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr class="text-center">
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufactureName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State.StateName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ManufactureID }, new { @class = "btn btn-secondary" })
+            @Html.ActionLink("Details", "Details", new { id=item.ManufactureID }, new { @class = "btn btn-success" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.ManufactureID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<p class="text-center mt-5">
+    @Html.ActionLink("Create New Manufacturer", "Create", "Manufactures", new { @class = "btn btn-light" })
+</p>
