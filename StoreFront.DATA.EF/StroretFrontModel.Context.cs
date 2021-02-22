@@ -29,12 +29,11 @@ namespace StoreFront.DATA.EF
         public virtual DbSet<Deparatment> Deparatments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<MachineType> MachineTypes { get; set; }
-        public virtual DbSet<Manufacture> Manufactures { get; set; }
         public virtual DbSet<MaskSize> MaskSizes { get; set; }
         public virtual DbSet<MaskType> MaskTypes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<StockStatu> StockStatus { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Manufacture> Manufactures { get; set; }
     }
 }

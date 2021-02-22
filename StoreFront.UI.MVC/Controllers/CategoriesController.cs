@@ -14,10 +14,67 @@ namespace StoreFront.UI.MVC.Controllers
     {
         private StoreFrontEntities1 db = new StoreFrontEntities1();
 
+        #region Ajax Methods
+
+        #region Ajax Create
+
+        public JsonResult AjaxCreate(Category category)
+        {
+            db.Categories.Add(category);
+            db.SaveChanges();
+            return Json(category);
+        }
+
+        #endregion
+
+        #region Ajax Delete
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AjaxDelete(int id)
+        {
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            var message = $"Deleted {category.CategoryName} from the database";
+
+            return Json(new
+            {
+                id = id,
+                message = message
+            });
+        }
+
+        #endregion
+
+        #region Edit [Get]
+        
+        public PartialViewResult CategoryEdit(int id)
+        {
+            Category category = db.Categories.Find(id);
+            ViewBag.Category = category.CategoryName;
+            return PartialView("CategoryEdit", category);
+        }
+
+        #endregion
+
+        #region Category Edit [Post]
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AjaxEdit(Category category)
+        {
+            db.Entry(category).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(category);
+        }
+
+        #endregion
+
+        #endregion
+
         // GET: Categories
         public ActionResult Index()
         {
-           
             return View(db.Categories.ToList());
         }
 
@@ -47,7 +104,7 @@ namespace StoreFront.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CateogryID,CategoryName")] Category category)
+        public ActionResult Create([Bind(Include = "CategoryID,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +136,7 @@ namespace StoreFront.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CateogryID,CategoryName")] Category category)
+        public ActionResult Edit([Bind(Include = "CategoryID,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {

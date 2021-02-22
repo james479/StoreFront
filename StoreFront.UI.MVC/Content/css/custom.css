@@ -1,63 +1,73 @@
-/* your styles go here */
-
-.form-container {
-    margin-top: 10em;
+﻿:root {
+    --primary-color: rgb(17, 17, 17);
+    --hover-transition: all 4s;
 }
 
-.user-name {
-    color: #000;
-}
 
-.register-login a{
-    color: #000;
-}
-
-    .register-login a:hover {
-        color: #dcb14a;
-        transition: all 0.3s
-    }
-
-.admin-form {
-    margin: auto;
-    width: 30%;
-}
-
-dt {
-    margin-bottom: .5em;
-}
-
-dd {
-    margin-bottom: 2em;
-}
-
-.small-dropdown {
-    width: 20%;
-}
-
-.table td, .table th {
-    vertical-align: middle;
-}
-
-/*******Home Page*********/
-
-.general-product-image {
-    width: 14em;
-    height: 14em;
-}
-
-/****Create Form****/
-.create-form {
-    width: 50%;
-    margin: 0 auto;
-    padding: 1.5em;
-    background-color: rgb(227, 225, 229);
-}
-
-.create-form label {
-    margin-right: .7em;
+.header__logo a {
+    color: var(--primary-color);
+    font-size: 1.5em;
     font-weight: bold;
 }
 
-.create-form-name {
-    width: 50%;
+.footer {
+    padding: 0;
+}
+
+.footer__copyright__text {
+    margin: 0;
+}
+
+.regular-form input {
+    color: #fff;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+    .regular-form input:hover, .regular-form input:focus {
+        color: #b7b7b7;
+    }
+
+.form-links a {
+    color: var(--primary-color);
+    font-size: 1em;
+}
+
+.form-links a:hover, .form-links:focus {
+    color: #777;
+}
+
+.admin-btn {
+    font-size: .8em;
+}
+
+.admin-btn:hover {
+    color: #777;
+}
+
+.cancel-btn {
+    background-color: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+    .cancel-btn:hover {
+        color: #b7b7b7;
+    }
+
+.action-icon {
+    padding: 0 1em;
+    color: var(--primary-color);
+}
+
+    .action-icon:hover, .action-icon:focus {
+        color: #b7b7b7;
+    }
+
+.modal-header {
+    border-bottom: 0 none;
+}
+
+.modal-footer {
+    border-top: 0 none;
 }

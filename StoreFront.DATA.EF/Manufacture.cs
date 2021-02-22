@@ -20,8 +20,8 @@ namespace StoreFront.DATA.EF
             this.Products = new HashSet<Product>();
         }
     
-        public int ManufactureID { get; set; }
-        public string ManufactureName { get; set; }
+        public int ManufacturerID { get; set; }
+        public string ManufacturerName { get; set; }
         public string City { get; set; }
         public Nullable<int> StateID { get; set; }
         public string Country { get; set; }

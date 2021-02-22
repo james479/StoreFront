@@ -12,7 +12,7 @@ namespace StoreFront.DATA.EF
     public class CategoryMetadata
     {
         [Display(Name = "Category")]
-        public int CateogryID { get; set; }
+        public int CategoryID { get; set; }
         [Display(Name = "Category")]
         [Required(ErrorMessage = "*Category name required")]
         [StringLength(20, ErrorMessage = "*Must be 20 characteres or less")]
@@ -114,58 +114,11 @@ namespace StoreFront.DATA.EF
 
     #endregion
 
-
-    #region Item Metadata
-
-    public class ItemMetadata
-    {
-        [Display(Name = "Product Name")]
-        [Required(ErrorMessage = "*Product required")]
-        public int ProductID { get; set; }
-
-        [Display(Name = "Mask Size")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        public Nullable<int> MaskSizeID { get; set; }
-
-        [Display(Name = "Mask Type")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        public Nullable<int> MaskTypeID { get; set; }
-
-        [Display(Name = "Machine Type")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        public Nullable<int> MachineTypeID { get; set; }
-
-        [Display(Name = "Stock Status")]
-        [Required(ErrorMessage = "*Stock Status required")]
-        public int StockStatusID { get; set; }
-
-        [Display(Name = "Replacement Mask")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        public Nullable<bool> IsReplacement { get; set; }
-
-        [Display(Name = "Units Available")]
-        [Required(ErrorMessage = "*Units available required")]
-        public int UnitsAvailable { get; set; }
-
-        [Display(Name = "Units on Order")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        public Nullable<int> UnitsOnOrder { get; set; }
-    }
-
-    [MetadataType(typeof(ItemMetadata))]
-
-    public partial class Item
-    {
-
-    }
-
-    #endregion
-
     #region Machine Type Metadata
 
     public class MachineTypeMetadata
     {
-        [Display(Name = "Department MachineTypeName")]
+        [Display(Name = "Machine Type")]
         [Required(ErrorMessage = "*Department name required")]
         [StringLength(20, ErrorMessage = "*Must be 20 characteres or less")]
         public string MachineTypeName { get; set; }
@@ -187,7 +140,7 @@ namespace StoreFront.DATA.EF
         [Display(Name = "Manufacture")]
         [Required(ErrorMessage = "*Manufacture name required")]
         [StringLength(50, ErrorMessage = "*Must be 50 characteres or less")]
-        public string ManufactureName { get; set; }
+        public string ManufacturerName { get; set; }
 
         [Required(ErrorMessage = "*City name required")]
         [StringLength(15, ErrorMessage = "*City must be 15 characters or less")]
@@ -254,35 +207,56 @@ namespace StoreFront.DATA.EF
     {
         [Display(Name = "Product Name")]
         [Required(ErrorMessage = "*Product name required")]
-        [StringLength(150, ErrorMessage = "*Must be 150 characteres or less")]
+        [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
         public string ProductName { get; set; }
-
-        [Display(Name = "Product Description")]
-        [UIHint("MultilineText")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        [StringLength(300, ErrorMessage = "*Must be 300 characteres or less")]
-        public string Description { get; set; }
-
-        [Display(Name = "Category")]
-        [Required(ErrorMessage = "*Category required")]
-        public int CategoryID { get; set; }
 
         [Display(Name = "Price")]
         [Required(ErrorMessage = "*Price required")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Manfacturer")]
-        [Required(ErrorMessage = "*Manufacturer required")]
-        public int ManufactureID { get; set; }
+        [Required(ErrorMessage = "*Category required")]
+        public int CategoryID { get; set; }
 
-        [Display(Name = "Featured Product")]
-        [Required(ErrorMessage = "*required")]
-        public bool IsFeatured { get; set; }
+        [Display(Name = "Product Description")]
+        [UIHint("MultilineText")]
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        [StringLength(800, ErrorMessage = "*Must be 800 characteres or less")]
+        public string Description { get; set; }
+
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        public Nullable<int> MaskSizeID { get; set; }
+
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        public Nullable<int> MaskTypeID { get; set; }
+
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        public Nullable<int> MachineTypeID { get; set; }
+
+        [Required(ErrorMessage = "*Manufacturer required")]
+        public int ManufacturerID { get; set; }
+
+        [Display(Name = "Stock Status")]
+        [Required(ErrorMessage = "*Stock Status required")]
+        public int StockStatusID { get; set; }
 
         [Display(Name = "Product Image")]
         [DisplayFormat(NullDisplayText = "[N/A]")]
         [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
         public string ProductImage { get; set; }
+
+        [Display(Name = "Featured Product")]
+        [Required(ErrorMessage = "*required")]
+        public bool IsFeatured { get; set; }
+
+
+        [Display(Name = "Units Available")]
+        [Required(ErrorMessage = "*Units available required")]
+        public int UnitsAvailable { get; set; }
+
+
+        [Display(Name = "Replacement Mask")]
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        public Nullable<bool> IsReplacement { get; set; }
     }
 
     [MetadataType(typeof(ProductMetadata))]

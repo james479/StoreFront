@@ -4,44 +4,34 @@
     ViewBag.Title = "Log in with your account";
 }
 
-<div class="container form-container">
-    <h2 class="mb-5 text-center">@ViewBag.Title</h2>
-    <section id="loginForm">
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
+<h2 class="mb-5 text-center">@ViewBag.Title</h2>
+<section id="loginForm" class="regular-form mt-5">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="d-flex flex-column align-items-center">
-                <div class="form-group w-50">
-                    @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group w-50">
-                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Log in" class="btn btn-secondary" />
-                </div>
-                <p>
-                    @Html.ActionLink("Register a new user?", "Register")
-                </p>
-                <p>
-                    @Html.ActionLink("Forget your password?", "ForgotPassword")
-                </p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+        <div class="d-flex flex-column align-items-center">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Email, new { placeholder = "Email"})
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-        }
-    </section>
-</div>
+            <div class="col-md-4 mt-4">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+                <input type="submit" value="Log in" class="site-btn col-md-2 login-button mt-4" />
+            <div class="form-links mt-4 mb-2">
+                @Html.ActionLink("Register a new user?", "Register")
+            </div>
+            <div class="form-links">
+                @Html.ActionLink("Forget your password?", "ForgotPassword")
+            </div>
+        </div>
+    }
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

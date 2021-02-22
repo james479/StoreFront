@@ -59,9 +59,6 @@
     <Compile Include="Employee.cs">
       <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Item.cs">
-      <DependentUpon>StroretFrontModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="MachineType.cs">
       <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
@@ -100,13 +97,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StroretFrontModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="StroretFrontModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StroretFrontModel.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
     <EntityDeploy Include="StroretFrontModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StroretFrontModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>StroretFrontModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="StroretFrontModel.edmx.diagram">
       <DependentUpon>StroretFrontModel.edmx</DependentUpon>

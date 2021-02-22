@@ -7,9 +7,9 @@
     <Schema Namespace="StoreFrontModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
-            <PropertyRef Name="CateogryID" />
+            <PropertyRef Name="CategoryID" />
           </Key>
-          <Property Name="CateogryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Deparatments">
@@ -37,20 +37,6 @@
           <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="ReportsToID" Type="int" />
         </EntityType>
-        <EntityType Name="Items">
-          <Key>
-            <PropertyRef Name="ItemID" />
-          </Key>
-          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="MaskSizeID" Type="int" />
-          <Property Name="MaskTypeID" Type="int" />
-          <Property Name="MachineTypeID" Type="int" />
-          <Property Name="StockStatusID" Type="int" Nullable="false" />
-          <Property Name="IsReplacement" Type="bit" />
-          <Property Name="UnitsAvailable" Type="int" Nullable="false" />
-          <Property Name="UnitsOnOrder" Type="int" />
-        </EntityType>
         <EntityType Name="MachineTypes">
           <Key>
             <PropertyRef Name="MachineTypeID" />
@@ -60,10 +46,10 @@
         </EntityType>
         <EntityType Name="Manufactures">
           <Key>
-            <PropertyRef Name="ManufactureID" />
+            <PropertyRef Name="ManufacturerID" />
           </Key>
-          <Property Name="ManufactureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ManufactureName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManufacturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="StateID" Type="int" />
           <Property Name="Country" Type="nvarchar" MaxLength="15" Nullable="false" />
@@ -87,13 +73,19 @@
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="300" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
-          <Property Name="ManufactureID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="800" />
+          <Property Name="MaskSizeID" Type="int" />
+          <Property Name="MaskTypeID" Type="int" />
+          <Property Name="MachineTypeID" Type="int" />
+          <Property Name="ManufacturerID" Type="int" Nullable="false" />
+          <Property Name="StockStatusID" Type="int" Nullable="false" />
           <Property Name="ProductImage" Type="nvarchar" MaxLength="100" />
           <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="UnitsAvailable" Type="int" Nullable="false" />
+          <Property Name="IsReplacement" Type="bit" />
         </EntityType>
         <EntityType Name="States">
           <Key>
@@ -145,66 +137,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Items_MachineTypes">
-          <End Role="MachineTypes" Type="Self.MachineTypes" Multiplicity="0..1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MachineTypes">
-              <PropertyRef Name="MachineTypeID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="MachineTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_MaskSizes">
-          <End Role="MaskSizes" Type="Self.MaskSizes" Multiplicity="0..1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MaskSizes">
-              <PropertyRef Name="MaskSizeID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="MaskSizeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_MaskTypes">
-          <End Role="MaskTypes" Type="Self.MaskTypes" Multiplicity="0..1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MaskTypes">
-              <PropertyRef Name="MaskTypeID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="MaskTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_StockStatus">
-          <End Role="StockStatus" Type="Self.StockStatus" Multiplicity="1" />
-          <End Role="Items" Type="Self.Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockStatus">
-              <PropertyRef Name="StockStatusID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="StockStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Manufactures_States">
           <End Role="States" Type="Self.States" Multiplicity="0..1" />
           <End Role="Manufactures" Type="Self.Manufactures" Multiplicity="*" />
@@ -222,10 +154,22 @@
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
-              <PropertyRef Name="CateogryID" />
+              <PropertyRef Name="CategoryID" />
             </Principal>
             <Dependent Role="Products">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_MachineTypes">
+          <End Role="MachineTypes" Type="Self.MachineTypes" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MachineTypes">
+              <PropertyRef Name="MachineTypeID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="MachineTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -234,10 +178,46 @@
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufactures">
-              <PropertyRef Name="ManufactureID" />
+              <PropertyRef Name="ManufacturerID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="ManufactureID" />
+              <PropertyRef Name="ManufacturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_MaskSizes">
+          <End Role="MaskSizes" Type="Self.MaskSizes" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaskSizes">
+              <PropertyRef Name="MaskSizeID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="MaskSizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_MaskTypes">
+          <End Role="MaskTypes" Type="Self.MaskTypes" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaskTypes">
+              <PropertyRef Name="MaskTypeID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="MaskTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_StockStatus">
+          <End Role="StockStatus" Type="Self.StockStatus" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockStatus">
+              <PropertyRef Name="StockStatusID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="StockStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -245,7 +225,6 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Deparatments" EntityType="Self.Deparatments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MachineTypes" EntityType="Self.MachineTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufactures" EntityType="Self.Manufactures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaskSizes" EntityType="Self.MaskSizes" Schema="dbo" store:Type="Tables" />
@@ -265,26 +244,6 @@
             <End Role="States" EntitySet="States" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Items_MachineTypes" Association="Self.FK_Items_MachineTypes">
-            <End Role="MachineTypes" EntitySet="MachineTypes" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_MaskSizes" Association="Self.FK_Items_MaskSizes">
-            <End Role="MaskSizes" EntitySet="MaskSizes" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_MaskTypes" Association="Self.FK_Items_MaskTypes">
-            <End Role="MaskTypes" EntitySet="MaskTypes" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_Products" Association="Self.FK_Items_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_StockStatus" Association="Self.FK_Items_StockStatus">
-            <End Role="StockStatus" EntitySet="StockStatus" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
           <AssociationSet Name="FK_Manufactures_States" Association="Self.FK_Manufactures_States">
             <End Role="States" EntitySet="States" />
             <End Role="Manufactures" EntitySet="Manufactures" />
@@ -293,8 +252,24 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Products_MachineTypes" Association="Self.FK_Products_MachineTypes">
+            <End Role="MachineTypes" EntitySet="MachineTypes" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_Products_Manufactures" Association="Self.FK_Products_Manufactures">
             <End Role="Manufactures" EntitySet="Manufactures" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_MaskSizes" Association="Self.FK_Products_MaskSizes">
+            <End Role="MaskSizes" EntitySet="MaskSizes" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_MaskTypes" Association="Self.FK_Products_MaskTypes">
+            <End Role="MaskTypes" EntitySet="MaskTypes" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_StockStatus" Association="Self.FK_Products_StockStatus">
+            <End Role="StockStatus" EntitySet="StockStatus" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
@@ -304,11 +279,10 @@
       <Schema Namespace="StoreFrontModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
-            <PropertyRef Name="CateogryID" />
+            <PropertyRef Name="CategoryID" />
           </Key>
-          <Property Name="CateogryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Deparatment">
           <Key>
@@ -346,19 +320,7 @@
           </Key>
           <Property Name="MachineTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MachineTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="StoreFrontModel.FK_Items_MachineTypes" FromRole="MachineType" ToRole="Item" />
-        </EntityType>
-        <EntityType Name="Manufacture">
-          <Key>
-            <PropertyRef Name="ManufactureID" />
-          </Key>
-          <Property Name="ManufactureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ManufactureName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StateID" Type="Int32" />
-          <Property Name="Country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="State" Relationship="Self.FK_Manufactures_States" FromRole="Manufactures" ToRole="States" />
-          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_Manufactures" FromRole="Manufacture" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_MachineTypes" FromRole="MachineType" ToRole="Product" />
         </EntityType>
         <EntityType Name="MaskSize">
           <Key>
@@ -366,7 +328,7 @@
           </Key>
           <Property Name="MaskSizeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Size" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Items" Relationship="StoreFrontModel.FK_Items_MaskSizes" FromRole="MaskSize" ToRole="Item" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_MaskSizes" FromRole="MaskSize" ToRole="Product" />
         </EntityType>
         <EntityType Name="MaskType">
           <Key>
@@ -374,23 +336,31 @@
           </Key>
           <Property Name="MaskTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaskTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="StoreFrontModel.FK_Items_MaskTypes" FromRole="MaskType" ToRole="Item" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_MaskTypes" FromRole="MaskType" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ManufactureID" Type="Int32" Nullable="false" />
-          <Property Name="ProductImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="StoreFrontModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MaskSizeID" Type="Int32" />
+          <Property Name="StockStatusID" Type="Int32" Nullable="false" />
+          <Property Name="UnitsAvailable" Type="Int32" Nullable="false" />
+          <Property Name="IsReplacement" Type="Boolean" />
+          <NavigationProperty Name="MaskSize" Relationship="StoreFrontModel.FK_Products_MaskSizes" FromRole="Product" ToRole="MaskSize" />
+          <NavigationProperty Name="StockStatu" Relationship="StoreFrontModel.FK_Products_StockStatus" FromRole="Product" ToRole="StockStatu" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="MaskTypeID" Type="Int32" />
+          <Property Name="MachineTypeID" Type="Int32" />
+          <Property Name="ManufacturerID" Type="Int32" Nullable="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MachineType" Relationship="StoreFrontModel.FK_Products_MachineTypes" FromRole="Product" ToRole="MachineType" />
+          <NavigationProperty Name="MaskType" Relationship="StoreFrontModel.FK_Products_MaskTypes" FromRole="Product" ToRole="MaskType" />
           <NavigationProperty Name="Manufacture" Relationship="StoreFrontModel.FK_Products_Manufactures" FromRole="Product" ToRole="Manufacture" />
-          <NavigationProperty Name="Items" Relationship="StoreFrontModel.FK_Items_Products" FromRole="Product" ToRole="Item" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -399,7 +369,7 @@
           <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StateName" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_States" FromRole="States" ToRole="Employees" />
-          <NavigationProperty Name="Manufactures" Relationship="Self.FK_Manufactures_States" FromRole="States" ToRole="Manufactures" />
+          <NavigationProperty Name="Manufactures" Relationship="StoreFrontModel.FK_Manufactures_States" FromRole="State" ToRole="Manufacture" />
         </EntityType>
         <EntityType Name="StockStatu">
           <Key>
@@ -407,7 +377,7 @@
           </Key>
           <Property Name="StockStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StockStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="StoreFrontModel.FK_Items_StockStatus" FromRole="StockStatu" ToRole="Item" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_StockStatus" FromRole="StockStatu" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Employees_Deparatments">
           <End Role="Deparatments" Type="Self.Deparatment" Multiplicity="1" />
@@ -445,24 +415,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Manufactures_States">
-          <End Role="States" Type="Self.State" Multiplicity="0..1" />
-          <End Role="Manufactures" Type="Self.Manufacture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="States">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="Manufactures">
-              <PropertyRef Name="StateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="StoreFrontEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Deparatments" EntityType="Self.Deparatment" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="MachineTypes" EntityType="Self.MachineType" />
-          <EntitySet Name="Manufactures" EntityType="Self.Manufacture" />
           <EntitySet Name="MaskSizes" EntityType="Self.MaskSize" />
           <EntitySet Name="MaskTypes" EntityType="Self.MaskType" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -480,49 +437,105 @@
             <End Role="States" EntitySet="States" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Manufactures_States" Association="Self.FK_Manufactures_States">
-            <End Role="States" EntitySet="States" />
-            <End Role="Manufactures" EntitySet="Manufactures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="StoreFrontModel.FK_Products_Categories">
-            <End Role="Category" EntitySet="Categories" />
+          <AssociationSet Name="FK_Products_MaskSizes" Association="StoreFrontModel.FK_Products_MaskSizes">
+            <End Role="MaskSize" EntitySet="MaskSizes" />
             <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_StockStatus" Association="StoreFrontModel.FK_Products_StockStatus">
+            <End Role="StockStatu" EntitySet="StockStatus" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_MachineTypes" Association="StoreFrontModel.FK_Products_MachineTypes">
+            <End Role="MachineType" EntitySet="MachineTypes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_MaskTypes" Association="StoreFrontModel.FK_Products_MaskTypes">
+            <End Role="MaskType" EntitySet="MaskTypes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="Manufactures" EntityType="StoreFrontModel.Manufacture" />
+          <AssociationSet Name="FK_Manufactures_States" Association="StoreFrontModel.FK_Manufactures_States">
+            <End Role="State" EntitySet="States" />
+            <End Role="Manufacture" EntitySet="Manufactures" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Manufactures" Association="StoreFrontModel.FK_Products_Manufactures">
             <End Role="Manufacture" EntitySet="Manufactures" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="Items" EntityType="StoreFrontModel.Item" />
-          <AssociationSet Name="FK_Items_MachineTypes" Association="StoreFrontModel.FK_Items_MachineTypes">
-            <End Role="MachineType" EntitySet="MachineTypes" />
-            <End Role="Item" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_MaskSizes" Association="StoreFrontModel.FK_Items_MaskSizes">
-            <End Role="MaskSize" EntitySet="MaskSizes" />
-            <End Role="Item" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_MaskTypes" Association="StoreFrontModel.FK_Items_MaskTypes">
-            <End Role="MaskType" EntitySet="MaskTypes" />
-            <End Role="Item" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_Products" Association="StoreFrontModel.FK_Items_Products">
+          <AssociationSet Name="FK_Products_Categories1" Association="StoreFrontModel.FK_Products_Categories1">
+            <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
-            <End Role="Item" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_StockStatus" Association="StoreFrontModel.FK_Items_StockStatus">
-            <End Role="StockStatu" EntitySet="StockStatus" />
-            <End Role="Item" EntitySet="Items" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Products_Categories">
-          <End Type="StoreFrontModel.Category" Role="Category" Multiplicity="1" />
+        <Association Name="FK_Products_MaskSizes">
+          <End Type="StoreFrontModel.MaskSize" Role="MaskSize" Multiplicity="0..1" />
           <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="CateogryID" />
+            <Principal Role="MaskSize">
+              <PropertyRef Name="MaskSizeID" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="CategoryID" />
+              <PropertyRef Name="MaskSizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_StockStatus">
+          <End Type="StoreFrontModel.StockStatu" Role="StockStatu" Multiplicity="1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockStatu">
+              <PropertyRef Name="StockStatusID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StockStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_MachineTypes">
+          <End Type="StoreFrontModel.MachineType" Role="MachineType" Multiplicity="0..1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MachineType">
+              <PropertyRef Name="MachineTypeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MachineTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_MaskTypes">
+          <End Type="StoreFrontModel.MaskType" Role="MaskType" Multiplicity="0..1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaskType">
+              <PropertyRef Name="MaskTypeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MaskTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Manufacture">
+          <Key>
+            <PropertyRef Name="ManufacturerID" />
+          </Key>
+          <Property Name="ManufacturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="State" Relationship="StoreFrontModel.FK_Manufactures_States" FromRole="Manufacture" ToRole="State" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_Manufactures" FromRole="Manufacture" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Manufactures_States">
+          <End Type="StoreFrontModel.State" Role="State" Multiplicity="0..1" />
+          <End Type="StoreFrontModel.Manufacture" Role="Manufacture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Manufacture">
+              <PropertyRef Name="StateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,89 +544,22 @@
           <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacture">
-              <PropertyRef Name="ManufactureID" />
+              <PropertyRef Name="ManufacturerID" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="ManufactureID" />
+              <PropertyRef Name="ManufacturerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Item">
-          <Key>
-            <PropertyRef Name="ItemID" />
-          </Key>
-          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="MaskSizeID" Type="Int32" />
-          <Property Name="MaskTypeID" Type="Int32" />
-          <Property Name="MachineTypeID" Type="Int32" />
-          <Property Name="StockStatusID" Type="Int32" Nullable="false" />
-          <Property Name="IsReplacement" Type="Boolean" />
-          <Property Name="UnitsAvailable" Type="Int32" Nullable="false" />
-          <Property Name="UnitsOnOrder" Type="Int32" />
-          <NavigationProperty Name="MachineType" Relationship="StoreFrontModel.FK_Items_MachineTypes" FromRole="Item" ToRole="MachineType" />
-          <NavigationProperty Name="MaskSize" Relationship="StoreFrontModel.FK_Items_MaskSizes" FromRole="Item" ToRole="MaskSize" />
-          <NavigationProperty Name="MaskType" Relationship="StoreFrontModel.FK_Items_MaskTypes" FromRole="Item" ToRole="MaskType" />
-          <NavigationProperty Name="Product" Relationship="StoreFrontModel.FK_Items_Products" FromRole="Item" ToRole="Product" />
-          <NavigationProperty Name="StockStatu" Relationship="StoreFrontModel.FK_Items_StockStatus" FromRole="Item" ToRole="StockStatu" />
-        </EntityType>
-        <Association Name="FK_Items_MachineTypes">
-          <End Type="StoreFrontModel.MachineType" Role="MachineType" Multiplicity="0..1" />
-          <End Type="StoreFrontModel.Item" Role="Item" Multiplicity="*" />
+        <Association Name="FK_Products_Categories1">
+          <End Type="StoreFrontModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MachineType">
-              <PropertyRef Name="MachineTypeID" />
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
             </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="MachineTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_MaskSizes">
-          <End Type="StoreFrontModel.MaskSize" Role="MaskSize" Multiplicity="0..1" />
-          <End Type="StoreFrontModel.Item" Role="Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MaskSize">
-              <PropertyRef Name="MaskSizeID" />
-            </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="MaskSizeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_MaskTypes">
-          <End Type="StoreFrontModel.MaskType" Role="MaskType" Multiplicity="0..1" />
-          <End Type="StoreFrontModel.Item" Role="Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MaskType">
-              <PropertyRef Name="MaskTypeID" />
-            </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="MaskTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_Products">
-          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="StoreFrontModel.Item" Role="Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Items_StockStatus">
-          <End Type="StoreFrontModel.StockStatu" Role="StockStatu" Multiplicity="1" />
-          <End Type="StoreFrontModel.Item" Role="Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockStatu">
-              <PropertyRef Name="StockStatusID" />
-            </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="StockStatusID" />
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -626,7 +572,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="StoreFrontModel.Category">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="CateogryID" ColumnName="CateogryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -666,17 +612,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Manufactures">
-            <EntityTypeMapping TypeName="StoreFrontModel.Manufacture">
-              <MappingFragment StoreEntitySet="Manufactures">
-                <ScalarProperty Name="ManufactureID" ColumnName="ManufactureID" />
-                <ScalarProperty Name="ManufactureName" ColumnName="ManufactureName" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MaskSizes">
             <EntityTypeMapping TypeName="StoreFrontModel.MaskSize">
               <MappingFragment StoreEntitySet="MaskSizes">
@@ -696,13 +631,19 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="StoreFrontModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
-                <ScalarProperty Name="ManufactureID" ColumnName="ManufactureID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+                <ScalarProperty Name="MachineTypeID" ColumnName="MachineTypeID" />
+                <ScalarProperty Name="MaskTypeID" ColumnName="MaskTypeID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="IsReplacement" ColumnName="IsReplacement" />
+                <ScalarProperty Name="UnitsAvailable" ColumnName="UnitsAvailable" />
+                <ScalarProperty Name="StockStatusID" ColumnName="StockStatusID" />
+                <ScalarProperty Name="MaskSizeID" ColumnName="MaskSizeID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 </MappingFragment>
             </EntityTypeMapping>
@@ -723,18 +664,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="StoreFrontModel.Item">
-              <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="UnitsOnOrder" ColumnName="UnitsOnOrder" />
-                <ScalarProperty Name="UnitsAvailable" ColumnName="UnitsAvailable" />
-                <ScalarProperty Name="IsReplacement" ColumnName="IsReplacement" />
-                <ScalarProperty Name="StockStatusID" ColumnName="StockStatusID" />
-                <ScalarProperty Name="MachineTypeID" ColumnName="MachineTypeID" />
-                <ScalarProperty Name="MaskTypeID" ColumnName="MaskTypeID" />
-                <ScalarProperty Name="MaskSizeID" ColumnName="MaskSizeID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <EntitySetMapping Name="Manufactures">
+            <EntityTypeMapping TypeName="StoreFrontModel.Manufacture">
+              <MappingFragment StoreEntitySet="Manufactures">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ManufacturerName" ColumnName="ManufacturerName" />
+                <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

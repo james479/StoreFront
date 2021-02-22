@@ -1,0 +1,30 @@
+﻿@model StoreFront.DATA.EF.Category
+
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "CategoryCreateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="d-flex justify-content-between align-items-center m-auto py-3">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter a Category" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                <div class="col-md-1">
+                    <input type="submit" value="Add" class="site-btn admin-btn" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -14,24 +14,25 @@ namespace StoreFront.DATA.EF
     
     public partial class Product
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
-        {
-            this.Items = new HashSet<Item>();
-        }
-    
         public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public string Description { get; set; }
-        public int CategoryID { get; set; }
-        public decimal Price { get; set; }
-        public int ManufactureID { get; set; }
-        public string ProductImage { get; set; }
         public bool IsFeatured { get; set; }
+        public decimal Price { get; set; }
+        public Nullable<int> MaskSizeID { get; set; }
+        public int StockStatusID { get; set; }
+        public int UnitsAvailable { get; set; }
+        public Nullable<bool> IsReplacement { get; set; }
+        public string ProductName { get; set; }
+        public int CategoryID { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> MaskTypeID { get; set; }
+        public Nullable<int> MachineTypeID { get; set; }
+        public int ManufacturerID { get; set; }
+        public string ProductImage { get; set; }
     
-        public virtual Category Category { get; set; }
+        public virtual MaskSize MaskSize { get; set; }
+        public virtual StockStatu StockStatu { get; set; }
+        public virtual MachineType MachineType { get; set; }
+        public virtual MaskType MaskType { get; set; }
         public virtual Manufacture Manufacture { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
     }
 }

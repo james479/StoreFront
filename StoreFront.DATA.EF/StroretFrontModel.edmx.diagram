@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="StoreFrontModel.Deparatment" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.Employee" Width="1.5" PointX="9" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MachineType" Width="1.5" PointX="6.625" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="StoreFrontModel.Manufacture" Width="1.5" PointX="11.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MaskSize" Width="1.5" PointX="1.875" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MaskType" Width="1.5" PointX="1.875" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.Product" Width="1.5" PointX="11.625" PointY="1.75" IsExpanded="true" />
@@ -18,15 +17,14 @@
         <AssociationConnector Association="StoreFrontModel.FK_Employees_Deparatments" ManuallyRouted="false" />
         <AssociationConnector Association="StoreFrontModel.FK_Employees_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="StoreFrontModel.FK_Employees_States" ManuallyRouted="false" />
-        <AssociationConnector Association="StoreFrontModel.FK_Manufactures_States" ManuallyRouted="false" />
-        <AssociationConnector Association="StoreFrontModel.FK_Products_Categories" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_MaskSizes" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_StockStatus" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_MachineTypes" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_MaskTypes" />
+        <EntityTypeShape EntityType="StoreFrontModel.Manufacture" Width="1.5" PointX="15" PointY="3.5" />
+        <AssociationConnector Association="StoreFrontModel.FK_Manufactures_States" />
         <AssociationConnector Association="StoreFrontModel.FK_Products_Manufactures" />
-        <EntityTypeShape EntityType="StoreFrontModel.Item" Width="1.5" PointX="4.125" PointY="1.625" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_MachineTypes" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_MaskSizes" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_MaskTypes" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_Products" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_StockStatus" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_Categories1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,77 @@
+﻿@model StoreFront.DATA.EF.Category
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "CategoryEditForm" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CategoryID)
+
+        <div class="modal-header m-auto mb-4">
+            <h4>Edit Category</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CategoryID)
+
+
+            <div class="form-group m-auto">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="modal-footer mt-3">
+            <div class="form-group w-75 m-auto d-flex justify-content-center">
+                <input type="button" value="Cancel" class="site-btn cancel-btn mr-3" data-dismiss="modal" />
+                <input type="submit" value="Save" class="site-btn admin-btn mr-3" />
+            </div>
+        </div>
+    </div>
+}
+
+@* Submit the form *@
+<script>
+
+    $('#CategoryEditForm').submit(function (e) {
+        e.preventDefault();
+        const formData = $(this).serializeArray();
+        //telling user to wait will category is being edited in db
+        $('#MessageContent').html(`<div class="alert alert-info">Please wait....</div>`);
+
+        $.ajax({
+            url: "@Url.Action("AjaxEdit", "Categories")",
+            type: "POST",
+            data: formData,
+            success: function (data) {
+                $('#MessageContent').html(`<div class="alert alert-success">
+                                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                               Your record was updated
+                                           </div>`);
+
+                //Populate table with new Category name
+                $('#Category-' + data.CategoryID + ' .category-name').html(data.CategoryName);
+                
+                //hidding modal
+                $('#EditModal').modal('hide');
+            },
+            error: function (e) {
+                $('#MessageContent').html(`<div class="alert alert-warning">
+                                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                               There was an error. Please try again or contact the site adminmistrator
+                                           </div>`);
+            }
+        });
+    });
+
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

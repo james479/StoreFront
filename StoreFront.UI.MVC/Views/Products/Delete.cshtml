@@ -12,6 +12,38 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.IsFeatured)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFeatured)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitsAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitsAvailable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReplacement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsReplacement)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
 
@@ -28,14 +60,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ProductImage)
         </dt>
 
@@ -44,11 +68,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsFeatured)
+            @Html.DisplayNameFor(model => model.MaskSize.Size)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IsFeatured)
+            @Html.DisplayFor(model => model.MaskSize.Size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockStatu.StockStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockStatu.StockStatus)
         </dd>
 
         <dt>
@@ -60,11 +92,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Manufacture.ManufactureName)
+            @Html.DisplayNameFor(model => model.MachineType.MachineTypeName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Manufacture.ManufactureName)
+            @Html.DisplayFor(model => model.MachineType.MachineTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaskType.MaskTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaskType.MaskTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Manufacture.ManufacturerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Manufacture.ManufacturerName)
         </dd>
 
     </dl>

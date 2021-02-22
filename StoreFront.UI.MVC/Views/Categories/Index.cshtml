@@ -1,36 +1,158 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Category>
 
 @{
-    ViewBag.Title = "Categories";
+    ViewBag.Title = "Product Categories";
 }
 
-<h2 class="text-center mb-5">@ViewBag.Title</h2>
+<div class="container">
 
-<table class="table w-50 m-auto">
-    <tr>
-        <th class="text-center">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th></th>
-    </tr>
+    <h2 class="text-center mb-5">@ViewBag.Title</h2>
+    <div class="text-center mb-5">
+        <button id="toggleCategoryCreate" class="site-btn admin-btn">Create New Category</button>
+    </div>
+    <div id="CategoryCreate">
+        @Html.Partial("AjaxCreate", new StoreFront.DATA.EF.Category())
+    </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td class="text-center">
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td class="text-right">
-                @Html.ActionLink("Edit", "Edit", new { id = item.CateogryID }, new { @class = "btn btn-secondary" }) 
-                @Html.ActionLink("Details", "Details", new { id = item.CateogryID }, new { @class = "btn btn-success" }) 
-                @Html.ActionLink("Delete", "Delete", new { id = item.CateogryID }, new { @class = "btn btn-danger" })
-            </td>
+
+    @*@Html.ActionLink("Create New Category", "Create", "Categories", new { @class = "site-btn mb-4 admin-btn" })*@
+
+
+    <table id="CategoriesTable" class="table w-50 m-auto">
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr class="text-center" id="Category-@item.CategoryID">
+                <td class="category-name">
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
 
-<p class="text-center mt-5">
-    @Html.ActionLink("Create New", "Create", "Categories", new { @class = "btn btn-light" })
-</p>
+                    <a class="action-icon EditLink" data-url="@Url.Action("CategoryEdit", "Categories", new { id = item.CategoryID })"
+                       href="" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i></a>
+                    @Ajax.ActionLink(" ", "AjaxDelete", "Categories", new { id = item.CategoryID }, new AjaxOptions {
+                            HttpMethod = "POST",
+                            Confirm = $"Are you sure you want to delete {item.CategoryName} from categories?",
+                            OnSuccess = "deleteConfirmed"
+                        },
+                            new { @class = "delete-link action-icon" }
+                        )
 
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <!--Edit Modal-->
+    <div class="modal" id="EditModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                @Html.Partial("CategoryEdit", new StoreFront.DATA.EF.Category())
+
+            </div>
+        </div>
+    </div>
+
+  
+
+
+@section scripts{
+    <script>
+        $('.delete-link').prepend(`<i class="far fa-trash-alt"></i>`);
+
+        //create new category, toggling the create button
+        $('#CategoryCreate').hide();
+        $('#toggleCategoryCreate').click(function () {
+            $('#CategoryCreate').toggle();
+            if ($('#CategoryCreate').is(':visible')) {
+                $('#toggleCategoryCreate').html('Cancel');
+                $('#toggleCategoryCreate').attr('class', 'site-btn cancel-btn');
+            }
+            else {
+                $('#toggleCategoryCreate').html('Create Category');
+                $('#toggleCategoryCreate').attr('class', 'site-btn admin-btn');
+            }
+        });
+
+        //process or submit the create form
+        $('#CategoryCreateForm').submit(function (e) {
+            const formData = $(this).serializeArray();
+            e.preventDefault();
+            $('#MessageContent').html(`<div class="alert alert-info">Please wait....</div>`);
+
+            //call ajax and process the form
+            $.ajax({
+                url: "@Url.Action("AjaxCreate", "Categories")",
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    $('#MessageContent').html(`<div class="alert alert-success">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                Category was added
+                                            </div>`);
+                    //clear the form
+                    $('#CategoryCreateForm')[0].reset();
+                    //add the temporary row to the table
+                    $(function () {
+                        const row = `<tr class="text-center">
+                                        <td>${data.CategoryName}</td>
+                                        <td>Refresh to view links</td>
+                                    </tr>`;
+                        $('#CategoriesTable').append(row);
+
+                        //close the form and show the create button again
+                        $('#CategoryCreate').toggle();
+                        $('#toggleCategoryCreate').html('Create Category');  //change text on button
+                        $('#toggleCategoryCreate').attr('class', 'site-btn admin-btn');
+                    });
+                },
+                error: function (e) {
+                    $('#MessageContent').html(`<div class="alert alert-warning">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                There was an error. Please try again or contact the site adminstrator
+                                            </div>`);
+                }
+            });
+        });
+
+        
+
+        //deleteConfirimed()
+        function deleteConfirmed(response) {
+            var rowId = '#Category-' + response.id;
+            $('#CategoriesTable').find(rowId).remove();
+
+            //diplay status message in layout
+            //$('#MessageContent').html(`<div class="alert alert-success">${response.message}</div>`);
+            $('#MessageContent').html(
+                `<div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    ${response.message}
+                </div>`);
+        }
+
+        //intercepting the edit link
+            $('.EditLink').click(function (e) {
+                e.preventDefault();
+                const url = $(this).data('url');
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (response) {
+                        $('.modal-content').html(response);
+                        $('#EditModal').modal('show');
+                    }
+                });
+            });
+
+    </script>
+}
