@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MVC3.UI.MVC.Utilities;
 using StoreFront.DATA.EF;
 
 namespace StoreFront.UI.MVC.Controllers
@@ -19,7 +17,7 @@ namespace StoreFront.UI.MVC.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.MaskSize).Include(p => p.StockStatu).Include(p => p.CategoryID).Include(p => p.MachineType).Include(p => p.MaskType).Include(p => p.Manufacture);
+            var products = db.Products.Include(p => p.MaskSize).Include(p => p.StockStatu).Include(p => p.MachineType).Include(p => p.MaskType).Include(p => p.Item);
             return View(products.ToList());
         }
 
@@ -43,10 +41,9 @@ namespace StoreFront.UI.MVC.Controllers
         {
             ViewBag.MaskSizeID = new SelectList(db.MaskSizes, "MaskSizeID", "Size");
             ViewBag.StockStatusID = new SelectList(db.StockStatus, "StockStatusID", "StockStatus");
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             ViewBag.MachineTypeID = new SelectList(db.MachineTypes, "MachineTypeID", "MachineTypeName");
             ViewBag.MaskTypeID = new SelectList(db.MaskTypes, "MaskTypeID", "MaskTypeName");
-            ViewBag.ManufacturerID = new SelectList(db.Manufactures, "ManufacturerID", "ManufacturerName");
+            ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName");
             return View();
         }
 
@@ -55,42 +52,10 @@ namespace StoreFront.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,IsFeatured,Price,MaskSizeID,StockStatusID,UnitsAvailable,IsReplacement,ProductName,CategoryID,Description,MaskTypeID,MachineTypeID,ManufacturerID,ProductImage")]
-            Product product, HttpPostedFileBase productImage)
+        public ActionResult Create([Bind(Include = "ProductID,Price,MaskSizeID,StockStatusID,UnitsAvailable,MaskTypeID,MachineTypeID,ItemID")] Product product)
         {
             if (ModelState.IsValid)
             {
-                string imgName = "No_Image_Available.jpg";
-
-                if (productImage != null)
-                {
-                    imgName = productImage.FileName;
-
-                    string ext = imgName.Substring(imgName.LastIndexOf('.'));
-
-                    string[] goodExts = { ".jpg", ".jpeg", ".gif", ".png" };
-
-                    if (goodExts.Contains(ext.ToLower()) && productImage.ContentLength <= 4194304)
-                    {
-                        imgName = Guid.NewGuid() + ext.ToLower();
-
-                        string savePath = Server.MapPath("~/Content/img/imgstore/");
-                        Image convertedImage = Image.FromStream(productImage.InputStream);
-                        int maxImageSize = 500;
-                        int maxThumbSize = 100;
-
-                        ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
-                    }
-
-                    else
-                    {
-                        imgName = "No_Image_Available.jpg";
-                    }
-                }
-
-                product.ProductImage = imgName;
-
-
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -98,10 +63,9 @@ namespace StoreFront.UI.MVC.Controllers
 
             ViewBag.MaskSizeID = new SelectList(db.MaskSizes, "MaskSizeID", "Size", product.MaskSizeID);
             ViewBag.StockStatusID = new SelectList(db.StockStatus, "StockStatusID", "StockStatus", product.StockStatusID);
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
             ViewBag.MachineTypeID = new SelectList(db.MachineTypes, "MachineTypeID", "MachineTypeName", product.MachineTypeID);
             ViewBag.MaskTypeID = new SelectList(db.MaskTypes, "MaskTypeID", "MaskTypeName", product.MaskTypeID);
-            ViewBag.ManufacturerID = new SelectList(db.Manufactures, "ManufacturerID", "ManufacturerName", product.ManufacturerID);
+            ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", product.ItemID);
             return View(product);
         }
 
@@ -119,10 +83,9 @@ namespace StoreFront.UI.MVC.Controllers
             }
             ViewBag.MaskSizeID = new SelectList(db.MaskSizes, "MaskSizeID", "Size", product.MaskSizeID);
             ViewBag.StockStatusID = new SelectList(db.StockStatus, "StockStatusID", "StockStatus", product.StockStatusID);
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
             ViewBag.MachineTypeID = new SelectList(db.MachineTypes, "MachineTypeID", "MachineTypeName", product.MachineTypeID);
             ViewBag.MaskTypeID = new SelectList(db.MaskTypes, "MaskTypeID", "MaskTypeName", product.MaskTypeID);
-            ViewBag.ManufacturerID = new SelectList(db.Manufactures, "ManufacturerID", "ManufacturerName", product.ManufacturerID);
+            ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", product.ItemID);
             return View(product);
         }
 
@@ -131,7 +94,7 @@ namespace StoreFront.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,IsFeatured,Price,MaskSizeID,StockStatusID,UnitsAvailable,IsReplacement,ProductName,CategoryID,Description,MaskTypeID,MachineTypeID,ManufacturerID,ProductImage")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,Price,MaskSizeID,StockStatusID,UnitsAvailable,MaskTypeID,MachineTypeID,ItemID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -141,10 +104,9 @@ namespace StoreFront.UI.MVC.Controllers
             }
             ViewBag.MaskSizeID = new SelectList(db.MaskSizes, "MaskSizeID", "Size", product.MaskSizeID);
             ViewBag.StockStatusID = new SelectList(db.StockStatus, "StockStatusID", "StockStatus", product.StockStatusID);
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
             ViewBag.MachineTypeID = new SelectList(db.MachineTypes, "MachineTypeID", "MachineTypeName", product.MachineTypeID);
             ViewBag.MaskTypeID = new SelectList(db.MaskTypes, "MaskTypeID", "MaskTypeName", product.MaskTypeID);
-            ViewBag.ManufacturerID = new SelectList(db.Manufactures, "ManufacturerID", "ManufacturerName", product.ManufacturerID);
+            ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", product.ItemID);
             return View(product);
         }
 

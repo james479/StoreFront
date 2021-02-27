@@ -1,0 +1,72 @@
+﻿@model StoreFront.DATA.EF.MachineType
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "MachineTypeEditForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MachineTypeID)
+
+        <div class="modal-header m-auto mb-4">
+            <h4>Edit Machine Type</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group m-auto">
+                @Html.EditorFor(model => model.MachineTypeName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MachineTypeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="modal-footer mt-3">
+            <div class="form-group w-75 m-auto d-flex justify-content-center">
+                <input type="button" value="Cancel" class="site-btn cancel-btn mr-3" data-dismiss="modal" />
+                <input type="submit" value="Save" class="site-btn admin-btn mr-3" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+
+    $('#MachineTypeEditForm').submit(function (e) {
+        e.preventDefault();
+        const formData = $(this).serializeArray();
+        //telling user to wait till category is being edited in the db
+        $('#MessageContent').html(`<div class="alert alert-info">Please wait....</div>`);
+
+        $.ajax({
+            url: "@Url.Action("AjaxEdit", "MachineTypes")",
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                $('#MessageContent').html(`<div class="alert alert-success">
+                                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                               Your record was updated
+                                           </div>`);
+
+                //Poplate table with updated machine type
+                $('#MachineType-' + response.MachineTypeID + ' .machine-type-name').html(response.MachineTypeName);
+
+                //hidding the modal
+                $('#editModal').modal('hide');
+            },
+            error: function (e) {
+                $('#MessageContent').html(`<div class="alert alert-warning">
+                                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                               There was an error. Please try again or contact the site adminmistrator
+                                           </div>`);
+            }
+        });
+    });
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

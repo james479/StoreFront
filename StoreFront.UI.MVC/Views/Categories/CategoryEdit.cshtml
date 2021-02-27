@@ -4,7 +4,7 @@
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "CategoryEditForm" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.CategoryID)
@@ -16,10 +16,6 @@
             </button>
         </div>
         <div class="modal-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.CategoryID)
-
-
             <div class="form-group m-auto">
                 @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
@@ -56,7 +52,7 @@
 
                 //Populate table with new Category name
                 $('#Category-' + data.CategoryID + ' .category-name').html(data.CategoryName);
-                
+
                 //hidding modal
                 $('#EditModal').modal('hide');
             },

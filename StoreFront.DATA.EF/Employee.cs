@@ -23,7 +23,6 @@ namespace StoreFront.DATA.EF
         public int EmployeeID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public int DepartmenetID { get; set; }
         public string Title { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public Nullable<System.DateTime> HireDate { get; set; }
@@ -33,11 +32,12 @@ namespace StoreFront.DATA.EF
         public string PostalCode { get; set; }
         public string PhoneNumber { get; set; }
         public Nullable<int> ReportsToID { get; set; }
+        public int DepartmentID { get; set; }
     
-        public virtual Deparatment Deparatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees1 { get; set; }
         public virtual Employee Employee1 { get; set; }
         public virtual State State { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

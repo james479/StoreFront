@@ -1,0 +1,23 @@
+﻿@model StoreFront.DATA.EF.MachineType
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "MachineTypeCreateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="d-flex justify-content-between align-items-center m-auto py-3">
+                @Html.EditorFor(model => model.MachineTypeName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter a Machine Type" } })
+                @Html.ValidationMessageFor(model => model.MachineTypeName, "", new { @class = "text-danger" })
+                <div class="col-md-1">
+                    <input type="submit" value="Add" class="site-btn admin-btn" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

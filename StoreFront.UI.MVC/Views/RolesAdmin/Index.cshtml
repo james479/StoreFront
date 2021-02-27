@@ -1,36 +1,41 @@
 ﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Roles";
 }
 
-<h2>Index</h2>
+<div class="container">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
 
-        </th>
-    </tr>
+    <table class="table w-50 m-auto">
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr class="text-center">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "RolesAdmin", new { id = item.Id})" class="action-icon"><i class="fas fa-info-circle"></i></a>
+                    <a href="@Url.Action("Edit", "RolesAdmin", new { id = item.Id})" class="action-icon"><i class="far fa-edit"></i></a>
+                    <a href="@Url.Action("Delete", "RolesAdmin", new { id = item.Id})" class="action-icon"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <!--Create Button-->
+    <div class="text-center">
+        @Html.ActionLink("Create New Role", "Create", "RolesAdmin", new { @class = "site-btn admin-btn mt-4" })
+    </div>
+</div>

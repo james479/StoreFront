@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="~/Content/css/style.css" type="text/css">
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <!--Datatables.net-->
+    <link href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Content/css/custom.css" rel="stylesheet" />
 </head>
 
@@ -56,6 +58,7 @@
                     @*<a href="#">Sign in</a>
                         <a href="#">Register</a>*@
                     @Html.Partial("_LoginPartial")
+                   
                 </div>
             </div>
         </div>
@@ -102,7 +105,7 @@
 
     <div id="MessageDisplay">
         <div class="w-50 m-auto text-center" id="MessageContent">
-            
+
         </div>
     </div>
 
@@ -137,6 +140,8 @@
     <script src="~/Content/js/owl.carousel.min.js"></script>
     <!--Ajax script-->
     <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+    <!--Datatables.net-->
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/js/main.js"></script>
 
     @RenderSection("scripts", required: false)

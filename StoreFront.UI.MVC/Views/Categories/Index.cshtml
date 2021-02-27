@@ -6,17 +6,16 @@
 
 <div class="container">
 
-    <h2 class="text-center mb-5">@ViewBag.Title</h2>
-    <div class="text-center mb-5">
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    <!--Create Button-->
+    <div class="text-center mb-4">
         <button id="toggleCategoryCreate" class="site-btn admin-btn">Create New Category</button>
     </div>
+    <!--Form to create new category-->
     <div id="CategoryCreate">
         @Html.Partial("AjaxCreate", new StoreFront.DATA.EF.Category())
     </div>
-
-
-    @*@Html.ActionLink("Create New Category", "Create", "Categories", new { @class = "site-btn mb-4 admin-btn" })*@
-
 
     <table id="CategoriesTable" class="table w-50 m-auto">
         <tr class="text-center">
@@ -60,8 +59,8 @@
             </div>
         </div>
     </div>
+</div>
 
-  
 
 
 @section scripts{
@@ -124,7 +123,7 @@
             });
         });
 
-        
+
 
         //deleteConfirimed()
         function deleteConfirmed(response) {

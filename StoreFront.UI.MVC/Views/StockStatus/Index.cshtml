@@ -1,0 +1,157 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.StockStatu>
+
+@{
+    ViewBag.Title = "Stock Status";
+}
+
+<div class="container">
+
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    <!--Create Button-->
+    <div class="text-center mb-4">
+        <button id="toggleCreate" class="site-btn admin-btn">Create New Stock Status</button>
+    </div>
+
+    <!--Form to create new category-->
+    <div id="create">
+        @Html.Partial("AjaxCreate", new StoreFront.DATA.EF.StockStatu())
+    </div>
+
+    <table id="stockstatusTable" class="table w-50 m-auto">
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.StockStatus)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="text-center" id="StockStatus-@item.StockStatusID">
+                <td class="stockstatus-name">
+                    @Html.DisplayFor(modelItem => item.StockStatus)
+                </td>
+                <td>
+                    <!--Edit button will use pop up modal to edit machine type-->
+                    <a href="" class="action-icon EditLink" data-url="@Url.Action("StockStatusEdit", "StockStatus", new { id = item.StockStatusID })"
+                       data-toggle="modal" data-target="#EditModal">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    <!--Delete button-->
+                    @Ajax.ActionLink(" ", "AjaxDelete", "StockStatus", new { id = item.StockStatusID }, new AjaxOptions {
+                        HttpMethod = "POST",
+                        Confirm = $"Are you sure you want to delete {item.StockStatusID} from Stock Status?",
+                        OnSuccess = "deleteConfirmed"
+                    },
+                        new { @class = "delete-link action-icon" }
+                    )
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <!--Edit Modal-->
+    <div class="modal" id="EditModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                @Html.Partial("StockStatusEdit", new StoreFront.DATA.EF.StockStatu())
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+        //putting trash icon in front of ajax action link
+        $('.delete-link').prepend(`<i class="far fa-trash-alt"></i>`);
+
+        //create new machine type with toggling the create button, hiding the form when page loads
+        $('#create').hide();
+        $('#toggleCreate').click(function () {
+            $('#create').toggle();
+            if ($('#create').is(':visible')) {
+                $('#toggleCreate').html('Cancel').attr('class', 'site-btn cancel-btn');
+            }
+            else {
+                $('#toggleCreate').html('Create Stock Status').attr('class', 'site-btn admin-btn');
+            }
+        });
+
+        //process the create form
+        $('#StockStatusCreateForm').submit(function (e) {
+            e.preventDefault();
+            const formData = $(this).serializeArray();
+            $('#MessageContent').html(`<div class="alert alert-info">Please wait....</div>`);
+
+            //call ajax to process the form
+            $.ajax({
+                url: "@Url.Action("AjaxCreate", "StockStatus")",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (response) {
+                    $('#MessageContent').html(`<div class="alert alert-success">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                Stock Status was added
+                                            </div>`);
+                    //clear the form
+                    $('#StockStatusCreateForm')[0].reset();
+
+                    //add the temporary row to the table
+                    $(function () {
+                        const row = `<tr class="text-center">
+                                        <td>${response.StockStatus}</td>
+                                    </tr>`;
+                        $('#stockstatusTable').append(row);
+
+                        //close the form and show the create button again
+                        $('#create').toggle();
+                        $('#toggleCreate').html('Create Stock Status').attr('class', 'site-btn admin-btn');
+                    });
+                },
+                error: function (e) {
+                    $('#MessageContent').html(`<div class="alert alert-warning">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                There was an error. Please try again or contact the site adminstrator
+                                            </div>`);
+                }
+            });
+        });
+
+        //delete confirmed function 
+        function deleteConfirmed(response) {
+            const rowId = '#StockStatus-' + response.id;
+            $('#stockstatusTable').find(rowId).remove();
+
+            //diplay status message in layout
+            //$('#MessageContent').html(`<div class="alert alert-success">${response.message}</div>`);
+            $('#MessageContent').html(
+                `<div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    ${response.message}
+                </div>`);
+        }
+
+        //intercepting the edit link to process editing a machine type
+        $('.EditLink').click(function (e) {
+            e.preventDefault();
+            const url = $(this).data('url');
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (response) {
+                    //populating the modal with the element to be edited
+                    $('.modal-content').html(response);
+                    $('#editModal').modal('show');
+                }
+            });
+        });
+
+    </script>
+}

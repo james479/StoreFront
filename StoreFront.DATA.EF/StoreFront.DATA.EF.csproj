@@ -53,10 +53,13 @@
     <Compile Include="Category.cs">
       <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Deparatment.cs">
+    <Compile Include="Department.cs">
       <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Employee.cs">
+      <DependentUpon>StroretFrontModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Item.cs">
       <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MachineType.cs">
@@ -101,6 +104,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StroretFrontModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UserDetail.cs">
+      <DependentUpon>StroretFrontModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

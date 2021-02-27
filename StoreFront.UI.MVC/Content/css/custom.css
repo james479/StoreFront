@@ -10,6 +10,10 @@
     font-weight: bold;
 }
 
+.header__top {
+    padding: 1.8em 0;
+}
+
 .footer {
     padding: 0;
 }
@@ -46,13 +50,14 @@
 }
 
 .cancel-btn {
-    background-color: #fff;
+    font-size: .8em;
+    background-color: #b7b7b7;
     color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+   
 }
 
     .cancel-btn:hover {
-        color: #b7b7b7;
+        color: #fff;
     }
 
 .action-icon {
@@ -71,3 +76,26 @@
 .modal-footer {
     border-top: 0 none;
 }
+
+.form-container {
+    border: 1px var(--primary-color) solid;
+    width: 40%;
+    margin: auto;
+    padding: 2em;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
+}
+
+.form-container-product {
+    border: 1px var(--primary-color) solid;
+    width: 60%;
+    margin: auto;
+    padding: 2em;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
+}
+
+.nice-select {
+    padding: 0 2.5em 0 1em;
+
+
+}
+

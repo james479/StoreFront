@@ -1,54 +1,105 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Manufacture>
 
 @{
-    ViewBag.Title = "Manufactures";
+    ViewBag.Title = "Manufacturers";
 }
 
+<div class="container">
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    <table class="table" id="manufacturesTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManufacturerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State.StateName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="Manufacturer-@item.ManufacturerID">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State.StateName)
+                    </td>
+                    <td>
+                        <a class="action-icon EditLink" href="@Url.Action("Edit", "Manufactures", new { id = item.ManufacturerID })">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        @Ajax.ActionLink(" ", "AjaxDelete", "Manufactures", new { id = item.ManufacturerID }, new AjaxOptions {
+                            HttpMethod = "POST",
+                            Confirm = $"Are you sure you want to delete {item.ManufacturerName} from manufactures?",
+                            OnSuccess = "deleteConfirmed"
+                        },
+                            new { @class = "delete-link action-icon" }
+                        )
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
 
 
-<h2 class="text-center my-5">@ViewBag.Title</h2>
+    <div class="text-center mt-4">
+        @Html.ActionLink("Create Manufacturer", "Create", "Manufactures", new { @class = "admin-btn site-btn" })
+    </div>
 
-<table class="table w-50 m-auto">
-    <tr class="text-center">
-        <th>
-            @Html.DisplayNameFor(model => model.ManufactureName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State.StateName)
-        </th>
-        <th></th>
-    </tr>
+   
+</div>
 
-@foreach (var item in Model) {
-    <tr class="text-center">
-        <td>
-            @Html.DisplayFor(modelItem => item.ManufactureName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State.StateName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ManufactureID }, new { @class = "btn btn-secondary" })
-            @Html.ActionLink("Details", "Details", new { id=item.ManufactureID }, new { @class = "btn btn-success" }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.ManufactureID }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
+
+
+
+@section scripts{
+
+    <script>
+
+        //datatables.net
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+
+        $('.delete-link').prepend(`<i class="far fa-trash-alt"></i>`);
+
+        //deleteConfirimed()
+        function deleteConfirmed(response) {
+            const table = $('.table').DataTable();
+            const rowId = '#Manufacturer-' + response.id;
+            const row = table.row($(rowId))
+            row.remove();
+            //$('#manufacturesTable').find(rowId).remove();
+
+            //diplay status message in layout
+            //$('#MessageContent').html(`<div class="alert alert-success">${response.message}</div>`);
+            $('#MessageContent').html(
+                `<div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    ${response.message}
+                </div>`);
+        }
+
+
+    </script>
 }
-
-</table>
-
-<p class="text-center mt-5">
-    @Html.ActionLink("Create New Manufacturer", "Create", "Manufactures", new { @class = "btn btn-light" })
-</p>

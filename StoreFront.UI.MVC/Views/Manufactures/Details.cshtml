@@ -1,55 +1,44 @@
 ﻿@model StoreFront.DATA.EF.Manufacture
 
 @{
-    ViewBag.Title = "Manufactuter Details";
+    ViewBag.Title = Model.ManufacturerName;
 }
 
-<h2 class="text-center my-5">@ViewBag.Title</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">@Model.ManufacturerName</h2>
 
-<div>
-
-    <dl class="dl-horizontal text-center">
-        <dt>
-            @Html.DisplayNameFor(model => model.ManufactureName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ManufactureName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-
-
-
-        @if (Model.State != null)
-        {
-            <dt class="mb-2">
-                @Html.DisplayNameFor(model => model.State.StateName)
+    <div>
+        <dl class="text-center">
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
             </dt>
 
-            <dd class="mb-4">
-                @Html.DisplayFor(model => model.State.StateName)
+            <dd>
+                @Html.DisplayFor(model => model.City)
             </dd>
-        }
 
-    </dl>
-    <div class="text-center my-5 d-flex justify-content-center">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ManufactureID }, new { @class = "btn btn-success mx-2" })
-        @Html.ActionLink("Back to List", "Index", "Manufactutures", new { @class = "btn btn-secondary mx-2" })
+            @if (Model.State != null)
+            {
+                <dt class="mt-4">
+                    @Html.DisplayNameFor(model => model.State.StateName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.State.StateName)
+                </dd>
+            }
+
+            <dt class="mt-4">
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+        </dl>
+    </div>
+    <div class="text-center mt-4">
+        @Html.ActionLink("Edit", "Edit", "Manufacturers", new { id = Model.ManufacturerID, @class = "site-btn cancel-btn ml-3" }) 
+        @Html.ActionLink("Manfacturers", "Index", "Manufacturers", new { @class = "site-btn admin-btn ml-3" })
     </div>
 </div>
-

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "";
 }
 
 <h2>Index</h2>
@@ -9,92 +9,61 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitsAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaskSize.Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockStatu.StockStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MachineType.MachineTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaskType.MaskTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.ItemName)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="container">
-    <table class="table">
-        <thead>
-            <tr class="index-table">
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category.CategoryName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaskSize.Size)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaskType.MaskTypeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MachineType.MachineTypeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacture.ManufacturerName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StockStatu.StockStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductImage)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="index-table">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaskSize.Size)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaskType.MaskTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MachineType.MachineTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Manufacture.ManufacturerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StockStatu.StockStatus)
-                    </td>
-                    <td>
-                        <img src="~/Content/img/imgstore/t_@item.ProductImage" alt="Product Image" />
-                    </td>
-                    <td>
-                        <a class="action-icon" href="@Url.Action("Edit", "Products")"><i class="far fa-edit"></i></a>
-                        <a class="action-icon" href="@Url.Action("Detals", "Products")"><i class="fas fa-info-circle"></i></a>
-                        <a class="action-icon" href="@Url.Action("Delete", "Products")"><i class="far fa-trash-alt"></i></a>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })*@
-                    </td>
-                </tr>
-            }
-        </tbody>
-
-    </table>
-</div>
-
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('.table').DataTable();
-        });
-    </script>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitsAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaskSize.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockStatu.StockStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineType.MachineTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaskType.MaskTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.ItemName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
+        </td>
+    </tr>
 }
+
+</table>

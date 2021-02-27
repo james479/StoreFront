@@ -14,7 +14,7 @@
         <div class="d-flex flex-column align-items-center">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Email, new { placeholder = "Email"})
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email"})
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4 mt-4">

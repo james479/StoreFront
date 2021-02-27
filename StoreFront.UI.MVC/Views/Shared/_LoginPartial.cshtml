@@ -1,12 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
+@using StoreFront.DATA.EF
+@{ 
+    //get the currrent logged on user
+    string currentUserId = User.Identity.GetUserId();
 
+    //retrieve the associated user details
+    StoreFrontEntities1 entity = new StoreFrontEntities1();
+    UserDetail user = entity.UserDetails.Where(u => u.UsersID == currentUserId).FirstOrDefault();
+    string greet = "Guest";
+
+    if (user != null)
+    {
+        greet = $"Logged on as {user.FirstName} {user.LastName}";
+    }
+}
 
 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
 {
     @Html.AntiForgeryToken()
     if (Request.IsAuthenticated)
     {
-        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "user-name, nav-link" })
+        @Html.ActionLink(greet, "Index", "Manage", null, new {  @class = "nav-link" })
+        @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "user-name, nav-link" })*@
         <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a>
         if (Request.IsAuthenticated && User.IsInRole("Admin"))
         {
