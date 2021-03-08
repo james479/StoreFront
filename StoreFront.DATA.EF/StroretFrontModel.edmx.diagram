@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7f68d97fa04d4b8f9bcbb662b066c55c" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="StoreFrontModel.Category" Width="1.5" PointX="15.375" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StoreFrontModel.Employee" Width="1.5" PointX="9" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreFrontModel.Employee" Width="1.5" PointX="1.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MachineType" Width="1.5" PointX="6.625" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MaskSize" Width="1.5" PointX="9" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="StoreFrontModel.MaskType" Width="1.5" PointX="14" PointY="1.25" IsExpanded="true" />
@@ -19,15 +19,13 @@
         <AssociationConnector Association="StoreFrontModel.FK_Products_StockStatus" />
         <AssociationConnector Association="StoreFrontModel.FK_Products_MachineTypes" />
         <AssociationConnector Association="StoreFrontModel.FK_Products_MaskTypes" />
-        <EntityTypeShape EntityType="StoreFrontModel.Manufacture" Width="1.5" PointX="15" PointY="3.5" />
+        <EntityTypeShape EntityType="StoreFrontModel.Manufacture" Width="1.5" PointX="12.125" PointY="6.75" />
         <AssociationConnector Association="StoreFrontModel.FK_Manufactures_States" />
-        <EntityTypeShape EntityType="StoreFrontModel.Department" Width="1.5" PointX="3.375" PointY="5" />
+        <EntityTypeShape EntityType="StoreFrontModel.Department" Width="1.5" PointX="3.75" PointY="6" />
         <AssociationConnector Association="StoreFrontModel.FK_Employees_Departments" />
         <EntityTypeShape EntityType="StoreFrontModel.UserDetail" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="StoreFrontModel.Item" Width="1.5" PointX="17.625" PointY="4.625" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_Categories" />
-        <AssociationConnector Association="StoreFrontModel.FK_Items_Manufactures" />
-        <AssociationConnector Association="StoreFrontModel.FK_Products_Items" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_Categories" />
+        <AssociationConnector Association="StoreFrontModel.FK_Products_Manufactures" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

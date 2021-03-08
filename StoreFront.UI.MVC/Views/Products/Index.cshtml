@@ -1,69 +1,146 @@
-﻿@model IEnumerable<StoreFront.DATA.EF.Product>
+﻿@*@model IEnumerable<StoreFront.DATA.EF.Product>*@
+@model PagedList.IPagedList<StoreFront.DATA.EF.Product>
+@using PagedList.Mvc;
+
 
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "Products | Sleep Well";
 }
 
-<h2>Index</h2>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links">
+                        <a href="@Url.Action("Index", "Home")">Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitsAvailable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaskSize.Size)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StockStatu.StockStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MachineType.MachineTypeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaskType.MaskTypeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Item.ItemName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitsAvailable)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaskSize.Size)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StockStatu.StockStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MachineType.MachineTypeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaskType.MaskTypeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Item.ItemName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
-        </td>
-    </tr>
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__search">
+                        <form action="#">
+                            <input type="text" placeholder="Search...">
+                            <button type="submit"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                </div>
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll">
+                                                <li>@Html.ActionLink("All Products", "Index", "Products", routeValues: new { searchString = "all" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Machines", "Index", "Products", routeValues: new { searchString = "Machine" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Full Face Masks", "Index", "Products", routeValues: new { searchString = "Full Face" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Nasal Masks", "Index", "Products", routeValues: new { searchString = "Nasal" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Nasal Pillows Masks", "Index", "Products", routeValues: new { searchString = "Nasal Pillows" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Cleaning Supplies", "Index", "Products", routeValues: new { searchString = "Cleaning" }, htmlAttributes: null)</li>
+                                                <li>@Html.ActionLink("Accessories", "Index", "Products", routeValues: new { searchString = "Accessories" }, htmlAttributes: null)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+
+                <div class="row">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-6" id="product-@item.ProductID">
+                            <div class="product__item">
+                                <div class="product__item__pic">
+                                    <a href="@Url.Action("Details", "Products", new { id = item.ProductID })">
+                                        <img src="~/Content/img/product/@item.ProductImage" alt="@item.ProductName" />
+                                    </a>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>@item.ProductName</h6>
+                                    @Html.ActionLink("Details", "Details", "Products", new { id = item.ProductID }, new { @class = "add-cart" })
+                                    @*<a href="" class="add-cart">+ Add To Cart</a>*@
+                                    <h5>@item.Price.ToString("C")</h5>
+                                </div>
+                                @* admin links for edit and delete *@
+                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <div class="mt-2">
+                                        <a class="action-icon" href="@Url.Action("Edit", "Products", new { id = item.ProductID })">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                        @Ajax.ActionLink(" ", "AjaxDelete", "Products", new { id = item.ProductID }, new AjaxOptions {
+                                       HttpMethod = "POST",
+                                       Confirm = $"Are you sure you want to delete {item.ProductName}?",
+                                       OnSuccess = "deleteConfirmed"
+                                   },
+                                            new { @class = "delete-link action-icon" }
+                                        )
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="product__pagination">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SeaerchString }))
+                </div>
+
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <div class="mt-4 text-center">
+                        @Html.ActionLink("Create New Product", "Create", "Products", new { @class = "site-btn admin-btn" })
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+
+    <script>
+
+        $('.delete-link').prepend(`<i class="far fa-trash-alt"></i>`);
+
+        //delete product from the view
+        function deleteConfirmed(response) {
+            $('#product-' + response.id).remove();
+
+            $('#MessageContent').html(
+                `<div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        ${response.message}
+                    </div>`);
+        }
+
+    </script>
 }
 
-</table>
+
+

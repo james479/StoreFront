@@ -1,12 +1,94 @@
-﻿@model IEnumerable<StoreFront.DATA.EF.MaskSize>
+﻿@using StoreFront.DATA.EF
+
+@{
+    StoreFrontEntities1 entity = new StoreFrontEntities1();
+
+    var categories = entity.Categories;
+    var featuredProducts = entity.Products.Where(x => x.IsFeatured == true);
+
+
+    //queries for the page, will use query to display and hide different query types
+
+
+
+}
 
 @{
     ViewBag.Title = "Home | Sleep Well";
 }
 
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+        <div class="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="hero__text">
+                        <h6>sleep well cpap shop</h6>
+                        <h2>Check out our great deals to help you sleep better</h2>
+                        <p>
+                            We sell cpap machines, mask, cleaning supplies and other accessories with free shipping.
+                        </p>
+                        <a href="#" class="primary-btn">shop now <span class="arrow_right"></span></a>
+                        <div class="hero__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Categories Section Begin -->
+<section class="banner spad">
+    <div class="container">
+        <h1 class="text-center mb-5">Categories</h1>
+        <div class="row">
+            @foreach (var item in categories)
+            {
+                <div class="col-md-6 col-sm-12 mb-5">
+                    <div class="banner__item d-flex flex-column align-items-center">
+                        <div class="banner__item__pic">
+                            <img src="~/Content/img/product/@(item.CategoryName).jpg" alt="@item.CategoryName" />
+                        </div>
+                        <div class="banner__item__text">
+                            <h2>@item.CategoryName</h2>
+                            <a href="#">Show now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!--Featured Items Begin-->
+
+<div class="container">
+    <h1 class="text-center mb-5">Featured Products</h1>
+    <div class="row">
+        @foreach (var item in featuredProducts)
+        {
+            <div class="col-md-3">
+                <div class="product__item">
+                    <div class="product__item__pic">
+                        <img src="~/Content/img/product/@item.ProductImage" alt="@item.ProductName" />
+                    </div>
+                    <div class="product__item__text">
+                        <h6>@item.ProductName</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <h5>@item.Price.ToString("C")</h5>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
 
 
-
-
-
-
+<!--Featured Items End-->

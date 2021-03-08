@@ -21,12 +21,18 @@ namespace StoreFront.DATA.EF
         public int UnitsAvailable { get; set; }
         public Nullable<int> MaskTypeID { get; set; }
         public Nullable<int> MachineTypeID { get; set; }
-        public int ItemID { get; set; }
+        public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
+        public string ProductImage { get; set; }
+        public int CategoryID { get; set; }
+        public int ManufacturerID { get; set; }
+        public bool IsFeatured { get; set; }
     
         public virtual MaskSize MaskSize { get; set; }
         public virtual StockStatu StockStatu { get; set; }
         public virtual MachineType MachineType { get; set; }
         public virtual MaskType MaskType { get; set; }
-        public virtual Item Item { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual Manufacture Manufacture { get; set; }
     }
 }

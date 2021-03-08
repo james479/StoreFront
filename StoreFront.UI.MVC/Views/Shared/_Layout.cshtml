@@ -58,45 +58,49 @@
                     @*<a href="#">Sign in</a>
                         <a href="#">Register</a>*@
                     @Html.Partial("_LoginPartial")
-                   
+
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a href="./index.html">Sleep Well CPAP Shop</a>
-                    </div>
+            <div class="d-flex justify-content-between">
+                <div class="header__logo">
+                    <a href="./index.html">Sleep Well CPAP Shop</a>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop.html">Shop</a></li>
-                            <li>
-                                <a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3 col-md-3">
+
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("Index", "Products")">Shop</a></li>
+                        <li><a href="./contact.html">Shopping Cart</a></li>
+                        <li><a href="./contact.html">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                @* Only display shopping cart icon if items are in shopping cart *@
+                @if (Session["cart"] != null &&
+                                    ((Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel>)Session["cart"])
+                                    .Count > 0)
+                {
+                    Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel> products = (Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel>)Session["cart"];
+                    decimal total = 0m;
+                    decimal tax = 0.04225m;
+                    foreach (var item in products)
+                    {
+                        total += item.Value.Qty * item.Value.CartItem.Price;
+                    }
+                    total += (total * tax);
+
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <span class="fa-stack has-badge" data-count="5">
+                            <i style="" class="fa fa-shopping-cart fa-stack-2x red-cart"></i>
+                        </span>
+                        <div class="price ml-2">@string.Format($"{total:c}")</div>
                     </div>
-                </div>
+                }
+
+
+
             </div>
             <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>
@@ -143,6 +147,8 @@
     <!--Datatables.net-->
     <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/js/main.js"></script>
+
+
 
     @RenderSection("scripts", required: false)
 </body>

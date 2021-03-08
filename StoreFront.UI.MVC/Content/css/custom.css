@@ -49,7 +49,7 @@
     color: #777;
 }
 
-.cancel-btn {
+.cancel-btn .cancel-btn a {
     font-size: .8em;
     background-color: #b7b7b7;
     color: var(--primary-color);
@@ -97,5 +97,61 @@
     padding: 0 2.5em 0 1em;
 
 
+}
+
+.category-tab {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.category-tab:hover {
+    color: #777;
+}
+
+.active {
+    border-bottom: 1px solid red;
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.spad {
+    padding: 3em 0;
+}
+
+
+.banner__item__text {
+    text-align: center;
+}
+
+.banner__item__pic {
+    
+    width: 25em;
+    height: 25em;
+}
+
+.product__item__pic img {
+    width: 15em;
+    height: 15em;
+}
+
+.pagination {
+    text-align: center;
+}
+
+.product__details__pic {
+    background-color: #fff;
+}
+
+.continue-btn {
+    font-size: 14px;
+    color: #ffffff;
+    background: #111111;
+    font-weight: 700;
+    border: none;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 14px 30px;
 }
 

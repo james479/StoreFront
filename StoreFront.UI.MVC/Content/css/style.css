@@ -169,14 +169,14 @@ ol {
 }
 
 .site-btn {
-	font-size: 14px;
-	color: #ffffff;
-	background: #111111;
-	font-weight: 700;
-	border: none;
-	text-transform: uppercase;
-	display: inline-block;
-	padding: 14px 30px;
+    font-size: 14px;
+    color: #ffffff;
+    background: #111111;
+    font-weight: 700;
+    border: none;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 14px 30px;
 }
 
 /* Preloder */
@@ -702,12 +702,12 @@ ol {
 	float: right;
 }
 
-.banner__item__text {
+/*.banner__item__text {
 	max-width: 300px;
 	position: absolute;
 	left: 0;
 	top: 140px;
-}
+}*/
 
 .banner__item__text h2 {
 	color: #111111;
@@ -1687,6 +1687,7 @@ ol {
 .product__details__option__size label input {
 	position: absolute;
 	visibility: hidden;
+   
 }
 
 .product__details__option__color {
@@ -2399,24 +2400,24 @@ ol {
 	text-align: right;
 }
 
-.continue__btn.update__btn a {
+.continue__btn.update__btn {
 	color: #ffffff;
 	background: #111111;
 	border-color: #111111;
 }
 
-.continue__btn.update__btn a i {
+/*.continue__btn.update__btn a i {
 	margin-right: 5px;
-}
+}*/
 
-.continue__btn a {
+.continue__btn {
 	color: #111111;
 	font-size: 14px;
 	font-weight: 700;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	border: 1px solid #e1e1e1;
-	padding: 14px 35px;
+	padding: 10px 25px;
 	display: inline-block;
 }
 

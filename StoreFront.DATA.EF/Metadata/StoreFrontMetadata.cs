@@ -169,7 +169,7 @@ namespace StoreFront.DATA.EF
     {
         [Display(Name = "Mask Size")]
         [Required(ErrorMessage = "*Mask size name required")]
-        [StringLength(10, ErrorMessage = "*Must be 10 characteres or less")]
+        [StringLength(50, ErrorMessage = "*Must be 50 characteres or less")]
         public string Size { get; set; }
     }
 
@@ -205,11 +205,27 @@ namespace StoreFront.DATA.EF
 
     public class ProductMetadata
     {
-        [Display(Name = "Item Name")]
-        [Required(ErrorMessage = "*Item Name required")]
-        public int ItemID { get; set; }
+        [Display(Name = "Product Name")]
+        [Required(ErrorMessage = "*Product name required")]
+        [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
+        public string ProductName { get; set; }
+
+        [Display(Name = "Product Description")]
+        [UIHint("MultilineText")]
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        [StringLength(800, ErrorMessage = "*Must be 800 characteres or less")]
+        public string ProductDescription { get; set; }
+
+        [Display(Name = "Product Image")]
+        [DisplayFormat(NullDisplayText = "[N/A]")]
+        [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
+        public string ProductImage { get; set; }
+
+        [Required(ErrorMessage = "*Category required")]
+        public int CategoryID { get; set; }
 
         [Display(Name = "Price")]
+        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "*Price required")]
         public decimal Price { get; set; }
 
@@ -226,9 +242,16 @@ namespace StoreFront.DATA.EF
         [Required(ErrorMessage = "*Stock Status required")]
         public int StockStatusID { get; set; }
 
+        [Required(ErrorMessage = "*Manufacturer required")]
+        public int ManufacturerID { get; set; }
+
         [Display(Name = "Units Available")]
         [Required(ErrorMessage = "*Units available required")]
         public int UnitsAvailable { get; set; }
+
+        [Display(Name = "Featured Product")]
+        [Required(ErrorMessage = "*required")]
+        public bool IsFeatured { get; set; }
     }
 
     [MetadataType(typeof(ProductMetadata))]
@@ -239,47 +262,6 @@ namespace StoreFront.DATA.EF
     }
 
     #endregion
-
-    #region Item
-
-    public class ItemMetadata
-    {
-        [Display(Name = "Item Name")]
-        [Required(ErrorMessage = "*Item name required")]
-        [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
-        public string ItemName { get; set; }
-
-        [Display(Name = "Item Description")]
-        [UIHint("MultilineText")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        [StringLength(800, ErrorMessage = "*Must be 800 characteres or less")]
-        public string Description { get; set; }
-
-        [Required(ErrorMessage = "*Category required")]
-        public int CategoryID { get; set; }
-
-        [Required(ErrorMessage = "*Manufacturer required")]
-        public int ManufacturerID { get; set; }
-
-        [Display(Name = "Item Image")]
-        [DisplayFormat(NullDisplayText = "[N/A]")]
-        [StringLength(100, ErrorMessage = "*Must be 100 characteres or less")]
-        public string ItemImage { get; set; }
-
-        [Display(Name = "Featured Product")]
-        [Required(ErrorMessage = "*required")]
-        public bool IsFeatured { get; set; }
-    }
-
-    [MetadataType(typeof(ItemMetadata))]
-
-    public partial class Item
-    {
-
-    }
-
-    #endregion
-
 
     #region State Metadata
 

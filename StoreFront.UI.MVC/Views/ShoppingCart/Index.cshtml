@@ -2,33 +2,153 @@
 @model Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Shopping Cart | Sleep Well";
+
+    decimal? subTotal = 0;
+    const decimal tax = 0.04225m;
 }
 
-<h2>Index</h2>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a href="@Url.Action("Index", "Home")">Home</a>
+                        <a href="@Url.Action("Index", "Products")">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row-@item.Value.CartItem.ProductID">
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img src="~/Content/img/product/t_@item.Value.CartItem.ProductImage" alt="@item.Value.CartItem.ProductName">
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>@item.Value.CartItem.ProductName</h6>
+                                            @if (item.Value.MaskSize != null)
+                                            {
+                                                <h6>Size: @item.Value.MaskSize</h6>
+                                            }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Qty)
-        </th>*@
-        <th></th>
-    </tr>
+                                            <h5>@item.Value.CartItem.Price.ToString("c")</h5>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Value.CartItem.ProductName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+                                        </div>
+                                    </td>
+                                    @using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("productId", item.Value.CartItem.ProductID)
+                                        @Html.Hidden("size", item.Value.MaskSize)
 
-</table>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    @Html.TextBox("qty", item.Value.Qty)
+                                                    @*<input type="text" value="@item.Value.Qty">*@
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">
+                                            @{
+                                                decimal? total = item.Value.CartItem.Price * item.Value.Qty;
+                                                subTotal += total;
+                                            }
+                                            @string.Format($"{total:c}")
+                                        </td>
+
+                                        <td>
+                                            @*<div class="continue__btn update__btn mr-3">*@
+                                            <input type="submit" value="Update" class="continue__btn update__btn mr-3" />
+                                            @*</div>*@
+                                        </td>
+                                    }
+
+                                    <td class="cart__close">
+
+                                        <a href="@Url.Action("RemoveFromCart", new { id = item.Value.CartItem.ProductID })">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 offset-md-6">
+
+                        <a class="cancel-btn site-btn" href="@Url.Action("Index", "Products")">Continue Shopping</a>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li>Subtotal <span>@string.Format($"{subTotal:c}")</span></li>
+                        @*calulating sales tax*@
+                        @if (subTotal > 0)
+                        {
+                            var salesTax = subTotal * tax;
+                            var total = salesTax + subTotal;
+                            <li>Sales Tax <span>@string.Format($"{salesTax:c}")</span></li>
+                            <li>Total <span>@string.Format($"{total:c}")</span></li>
+                        }
+
+                    </ul>
+                    @if (Model.Count > 0)
+                    {
+                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+@*@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value.CartItem.ProductName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }*@
+
+
+

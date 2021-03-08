@@ -33,11 +33,12 @@ namespace StoreFront.UI.MVC.Controllers
             return View(shoppingCart);
         }
 
-        public ActionResult UpdateCart(int productId, int qty)
+        public ActionResult UpdateCart(int productId, int qty, string size)
         {
             if (qty == 0)
             {
-                //remove from cart
+                RemoveFromCart(productId);
+                return RedirectToAction("Index");
             }
 
             //retrive the cart from session and assign to local dictionary

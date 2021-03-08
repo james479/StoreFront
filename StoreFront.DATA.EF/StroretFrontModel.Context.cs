@@ -36,6 +36,5 @@ namespace StoreFront.DATA.EF
         public virtual DbSet<Manufacture> Manufactures { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
     }
 }

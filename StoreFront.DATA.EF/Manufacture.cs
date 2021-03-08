@@ -17,7 +17,7 @@ namespace StoreFront.DATA.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Manufacture()
         {
-            this.Items = new HashSet<Item>();
+            this.Products = new HashSet<Product>();
         }
     
         public int ManufacturerID { get; set; }
@@ -28,6 +28,6 @@ namespace StoreFront.DATA.EF
     
         public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
