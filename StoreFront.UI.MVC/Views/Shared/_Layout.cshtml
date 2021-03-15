@@ -72,8 +72,8 @@
                     <ul>
                         <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("Index", "Products")">Shop</a></li>
-                        <li><a href="./contact.html">Shopping Cart</a></li>
-                        <li><a href="./contact.html">Contact Us</a></li>
+                        <li><a href="@Url.Action("Index", "ShoppingCart")">Shopping Cart</a></li>
+                        <li><a href="@Url.Action("Contact", "Home")">Contact Us</a></li>
                     </ul>
                 </nav>
 
@@ -85,18 +85,18 @@
                     Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel> products = (Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel>)Session["cart"];
                     decimal total = 0m;
                     decimal tax = 0.04225m;
+                    int count = products.Count;
                     foreach (var item in products)
                     {
                         total += item.Value.Qty * item.Value.CartItem.Price;
                     }
                     total += (total * tax);
 
-                    <div class="header__nav__option">
-                        <span class="fa-stack has-badge" data-count="5">
-                            <i style="" class="fa fa-shopping-cart fa-stack-2x red-cart"></i>
-                        </span>
-                        <div class="price ml-2">@string.Format($"{total:c}")</div>
-                    </div>
+                <div class="header__nav__option">
+
+                    <a href="#"><img src="~/Content/img/icon/cart.png" alt=""> <span>@count</span></a>
+                    <div class="price ml-2">@string.Format($"{total:c}")</div>
+                </div>
                 }
 
 

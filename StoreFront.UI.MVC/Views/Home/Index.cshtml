@@ -29,7 +29,7 @@
                         <p>
                             We sell cpap machines, mask, cleaning supplies and other accessories with free shipping.
                         </p>
-                        <a href="#" class="primary-btn">shop now <span class="arrow_right"></span></a>
+                        <a href="@Url.Action("Index", "Products")" class="primary-btn">shop now <span class="arrow_right"></span></a>
                         <div class="hero__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>@item.CategoryName</h2>
-                            <a href="#">Show now</a>
+                            <a href="@Url.Action("Index", "Products")">Show now</a>
                         </div>
                     </div>
                 </div>
@@ -76,11 +76,13 @@
             <div class="col-md-3">
                 <div class="product__item">
                     <div class="product__item__pic">
-                        <img src="~/Content/img/product/@item.ProductImage" alt="@item.ProductName" />
+                        <a href="@Url.Action("Details", "Products", new { id = item.ProductID })">
+                            <img src="~/Content/img/product/@item.ProductImage" alt="@item.ProductName" />
+                        </a>  
                     </div>
                     <div class="product__item__text">
                         <h6>@item.ProductName</h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        @Html.ActionLink("Details", "Details", "Products", new { id = item.ProductID }, new { @class = "add-cart" })
                         <h5>@item.Price.ToString("C")</h5>
                     </div>
                 </div>

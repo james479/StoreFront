@@ -45,7 +45,7 @@
                                                 <div class="mb-3 product__details__option">
                                                     <div class="product__details__option__size">
                                                         <span>Size:</span>
-                                                       
+
                                                         @foreach (var item in sizes)
                                                         {
                                                             @Html.RadioButton("Size", item)
@@ -59,15 +59,15 @@
 
                                                 </div>
                                             }
-                                                <div class="product__details__cart__option">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty">
-                                                            @Html.TextBox("Qty", 1)
-                                                            @*<input type="text" value="1">*@
-                                                        </div>
+                                            <div class="product__details__cart__option">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        @Html.TextBox("Qty", 1)
+                                                        @*<input type="text" value="1">*@
                                                     </div>
-                                                    <input type="submit" value="Add To Cart" class="primary-btn" />
                                                 </div>
+                                                <input type="submit" value="Add To Cart" class="primary-btn" />
+                                            </div>
                                         }
 
                                         <div class="product__details__last__option">
@@ -93,20 +93,17 @@
     <script>
 
         //check to make sure you selected a size for the mask
-        //$(function () {
-        //    $('form').submit(function (e) {
-        //        if (!$('input[name="size"]:checked').val()) {
-        //            alert('Nothing is checked');
-        //        }
-        //        else {
-        //            alert('Button was checked');
-        //        }
-
-        //        e.preventDefault();
-
-
-        //    });
-        //});
+        $(function () {
+            $('form').submit(function (e) {
+                if ($('input[name="Size"]').length) {
+                    if (!$('input[name="Size"]:checked').val()) {
+                        alert('Please select a mask size');
+                        e.preventDefault();
+                    }
+                }
+               
+            });
+        });
     </script>
 
 }

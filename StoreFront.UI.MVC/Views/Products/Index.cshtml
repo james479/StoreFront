@@ -81,7 +81,6 @@
                                 <div class="product__item__text">
                                     <h6>@item.ProductName</h6>
                                     @Html.ActionLink("Details", "Details", "Products", new { id = item.ProductID }, new { @class = "add-cart" })
-                                    @*<a href="" class="add-cart">+ Add To Cart</a>*@
                                     <h5>@item.Price.ToString("C")</h5>
                                 </div>
                                 @* admin links for edit and delete *@

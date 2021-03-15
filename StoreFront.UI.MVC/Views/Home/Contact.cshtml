@@ -1,20 +1,93 @@
-﻿@{
+﻿@model StoreFront.UI.MVC.Models.ContactViewModel
+
+@{
     ViewBag.Title = "Contact";
 }
-<hgroup>
-    <h2>@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
-</hgroup>
-<div>
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<!-- Contact Section Begin -->
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "contactForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <address>
-        <i class="icon-envelope"></i><strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <i class="icon-envelope"></i><strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</div>
+    <section class="contact spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact__text">
+                        <div class="section-title">
+                            <span>Information</span>
+                            <h2>Contact Us</h2>
+                            <p>
+                                As you might expect of a company that began as a high-end interiors contractor, we pay
+                                strict attention.
+                            </p>
+                        </div>
+                        <ul>
+                            <li>
+                                <h4>America</h4>
+                                <p>195 E Parker Square Dr, Parker, CO 801 <br />+43 982-314-0958</p>
+                            </li>
+                            <li>
+                                <h4>France</h4>
+                                <p>109 Avenue Léon, 63 Clermont-Ferrand <br />+12 345-423-9893</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="regular-form">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(x => x.Name) } } )
+                                    @*<input type="text" placeholder="Name">*@
+                                </div>
+                                <div class="col-lg-6">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(x => x.Email) } })
+                                    @*<input type="text" placeholder="Email">*@
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(x => x.Subject) } })
+                                </div>
+                                <div class="col-lg-12">
+                                    @Html.EditorFor(model => model.Message, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(x => x.Message) } })
+                                    <button type="submit" class="site-btn admin-btn">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ 
+}
+
+@section scripts{
+
+    <script>
+
+        $('#contactForm').submit(function (e) {
+            e.preventDefault();
+            const formData = $(this).serializeArray();
+            $.ajax({
+                url: '@Url.Action("ContactAjax", "Home")',
+                type: 'POST',
+                data: formData,
+                datatype: 'json',
+                success: function (response) {
+                    $('#MessageContent').html(
+                        `<div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Thank you for the message ${response.Name}. We will respond to you at ${response.Email} as soon as possible
+                </div>`)
+                },
+               
+            });
+        });
+
+    </script>
+
+
+}

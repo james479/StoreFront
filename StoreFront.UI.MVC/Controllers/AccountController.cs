@@ -404,6 +404,7 @@ namespace StoreFront.UI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session["cart"] = null;
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
